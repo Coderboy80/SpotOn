@@ -2,6 +2,10 @@ let accessToken = new URLSearchParams(window.location.hash.substring(1)).get(
   "access_token"
 );
 
+let logOutTimer = setInterval(function () {
+  window.location.href = "http://127.0.0.1:5500/index.html";
+}, 1000 * 60 * 60 + 3000);
+
 const topTracks = document.querySelector("#top-tracks");
 const topArtists = document.querySelector("#top-artists");
 const btnTop50 = document.querySelector("#btn-top-50");
@@ -16,7 +20,6 @@ spotifyApi.setAccessToken(accessToken);
 let userId;
 spotifyApi.getMe().then(
   function (data) {
-    console.log(data);
     let userDisplayName = data.display_name;
     let userProfilePic = data?.images[0]?.url;
 

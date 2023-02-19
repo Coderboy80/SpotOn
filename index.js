@@ -10,6 +10,6 @@ url += "&client_id=" + encodeURIComponent(client_id);
 url += "&scope=" + encodeURIComponent(scope);
 url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
 
-login.addEventListener("click", function () {
+window.addEventListener("load", function () {
   window.location.href = url;
 });
