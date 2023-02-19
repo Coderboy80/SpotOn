@@ -6,9 +6,9 @@ var SpotifyWebApi = require("spotify-web-api-js");
 var spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(accessToken);
 
-spotifyApi.getUserPlaylists().then(
+spotifyApi.getMe().then(
   function (data) {
-    console.log(("User playlists", data.items[0]));
+    console.log("User information", data);
   },
   function (err) {
     console.error(err);
