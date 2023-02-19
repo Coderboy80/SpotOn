@@ -6,6 +6,7 @@ const topTracks = document.querySelector("#top-tracks");
 const topArtists = document.querySelector("#top-artists");
 const btnTop50 = document.querySelector("#btn-top-50");
 const btnMixUp = document.querySelector("#btn-mix-up");
+const welcomeMessage = document.querySelector("#welcome-message");
 
 var SpotifyWebApi = require("spotify-web-api-js");
 
@@ -15,8 +16,23 @@ spotifyApi.setAccessToken(accessToken);
 let userId;
 spotifyApi.getMe().then(
   function (data) {
-    userId = data.id;
+    console.log(data);
+    let userDisplayName = data.display_name;
+    let userProfilePic = data?.images[0]?.url;
 
+    let username = document.createElement("h1");
+    username.textContent = `Hello, ${userDisplayName}`;
+    welcomeMessage.insertAdjacentElement("afterbegin", username);
+
+    if (userProfilePic) {
+      let pfp = document.createElement("img");
+      pfp.src = userProfilePic;
+      pfp.style.height = "200px";
+      pfp.style.width = "200px";
+      welcomeMessage.insertAdjacentElement("beforeend", pfp);
+    }
+
+    userId = data.id;
     btnTop50.addEventListener("click", function () {
       createNewTop50TrackPlaylist();
     });

@@ -7,6 +7,7 @@ const topTracks = document.querySelector("#top-tracks");
 const topArtists = document.querySelector("#top-artists");
 const btnTop50 = document.querySelector("#btn-top-50");
 const btnMixUp = document.querySelector("#btn-mix-up");
+const welcomeMessage = document.querySelector("#welcome-message");
 
 var SpotifyWebApi = require("spotify-web-api-js");
 
@@ -16,8 +17,23 @@ spotifyApi.setAccessToken(accessToken);
 let userId;
 spotifyApi.getMe().then(
   function (data) {
-    userId = data.id;
+    console.log(data);
+    let userDisplayName = data.display_name;
+    let userProfilePic = data?.images[0]?.url;
 
+    let username = document.createElement("h1");
+    username.textContent = `Hello, ${userDisplayName}`;
+    welcomeMessage.insertAdjacentElement("afterbegin", username);
+
+    if (userProfilePic) {
+      let pfp = document.createElement("img");
+      pfp.src = userProfilePic;
+      pfp.style.height = "200px";
+      pfp.style.width = "200px";
+      welcomeMessage.insertAdjacentElement("beforeend", pfp);
+    }
+
+    userId = data.id;
     btnTop50.addEventListener("click", function () {
       createNewTop50TrackPlaylist();
     });
@@ -79,7 +95,7 @@ function createMixUpPlaylist() {
     navigator.locale
   ).format(Date.now())} `;
   const playlistDescription =
-    "Random songs from all your playlists - Created By SpotOn";
+    "Mixed Up songs from all your playlists - Created By SpotOn";
   spotifyApi
     .createPlaylist(userId, {
       name: playlistName,
@@ -115,28 +131,6 @@ async function addMixUpTracks(plId) {
     console.error(`Error adding new tracks: ${error}`);
   }
 }
-
-// function addMixUpTracks(plId) {
-//   const mixTracks = [];
-//   console.log(typeof mixTracks);
-//   spotifyApi
-//     .getUserPlaylists(userId, { limit: 50 })
-//     .then(function (data) {
-//       data.items.forEach((item) => {
-//         const i = item.id;
-//         spotifyApi.getPlaylistTracks(i, { limit: 50 }).then(function (data) {
-//           const randomTrack =
-//             data.items[Math.floor(Math.random() * data.items.length)]?.track
-//               .uri;
-//           randomTrack && mixTracks.push(randomTrack);
-//         });
-//       });
-
-//     })
-//     .catch((error) => {
-//       console.error(`Error adding new tracks: ${error}`);
-//     });
-// }
 
 function createNewTop50TrackPlaylist() {
   const playlistName = `Top 50 tracks - ${Intl.DateTimeFormat(
