@@ -108,4 +108,11 @@ button {
 
 button:hover {
   background-color: #1ed760;
+  color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  button {
+    width: 40%;
+  }
 }

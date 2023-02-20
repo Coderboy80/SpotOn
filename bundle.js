@@ -25,14 +25,13 @@ spotifyApi.getMe().then(
     let userProfilePic = data?.images[0]?.url;
 
     let username = document.createElement("h1");
-    username.textContent = `Hello ${userDisplayName}`;
+    username.textContent = `Welcome to SpotOn, ${userDisplayName}`;
     welcomeMessage.insertAdjacentElement("afterbegin", username);
 
     if (userProfilePic) {
       let pfp = document.createElement("img");
       pfp.src = userProfilePic;
       pfp.id = "pfp";
-      console.log(pfp);
       welcomeMessage.insertAdjacentElement("beforeend", pfp);
     }
 
@@ -86,7 +85,6 @@ spotifyApi.getMyTopArtists(options).then(
   function (data) {
     const artists = data.items;
     artists.forEach((artist, i) => {
-      console.log(artist);
       let anArtist = `<div class="anArtist">
   <img src="${artist.images[2].url}" />
   <h3>${i + 1}. ${artist.name}</h3>
@@ -172,7 +170,6 @@ function addTop50Tracks(plId) {
     function (data) {
       let tracks = ("User information", data.items);
       const top50Tracks = tracks.map((element) => {
-        console.log(element.id);
         return element.uri;
       });
       spotifyApi.addTracksToPlaylist(plId, top50Tracks);
