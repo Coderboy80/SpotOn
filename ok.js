@@ -3,7 +3,7 @@ let accessToken = new URLSearchParams(window.location.hash.substring(1)).get(
 );
 
 let logOutTimer = setInterval(function () {
-  window.location.href = "http://127.0.0.1:5500/index.html";
+  window.location.href = "https://spot-on-app.netlify.app/index.html";
 }, 1000 * 3500);
 
 const topTracks = document.querySelector("#tracks");

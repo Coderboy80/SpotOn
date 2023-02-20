@@ -1,5 +1,5 @@
 const client_id = "17c429b2b366470d9bb920afd43ee271";
-const redirect_uri = "http://127.0.0.1:5500/new.html";
+const redirect_uri = "https://spot-on-app.netlify.app/new.html";
 const scope =
   "playlist-modify-public playlist-modify-private user-read-private user-top-read user-read-email playlist-read-private playlist-read-collaborative";
 
