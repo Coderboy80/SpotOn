@@ -114,4 +114,10 @@ button:hover {
   button {
     width: 40%;
   }
+  #top-artists {
+    flex-direction: column;
+  }
+  #tracks {
+    flex-direction: column;
+  }
 }
