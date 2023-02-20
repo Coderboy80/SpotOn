@@ -50,6 +50,7 @@ body {
 
 #top-artists {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
@@ -115,9 +116,6 @@ button:hover {
     width: 40%;
   }
   #top-artists {
-    flex-direction: column;
-  }
-  #tracks {
     flex-direction: column;
   }
 }
