@@ -4,7 +4,7 @@ let accessToken = new URLSearchParams(window.location.hash.substring(1)).get(
 
 let logOutTimer = setInterval(function () {
   window.location.href = "https://spot-on-app.netlify.app/index.html";
-}, 1000 * 3500);
+}, 5000);
 
 const topTracks = document.querySelector("#tracks");
 const topArtists = document.querySelector("#top-artists");
