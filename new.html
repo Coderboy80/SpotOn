@@ -4,23 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
-    <div id="welcome-message"></div>
-    <div id="top">
-      <div id="top-tracks">
-        <h1>Your top tracks -</h1>
-      </div>
-      <div id="top-artists">
-        <h1>Your top artists -</h1>
-      </div>
-      <button id="btn-top-50">Create playlist with top 50 songs</button>
-      <button id="btn-mix-up">
-        Create playlist with mixed up songs from all your playlists
-      </button>
-    </div>
+    <div class="main">
+      <div id="welcome-message"></div>
 
+      <div id="top">
+        <div id="top-tracks-main">
+          <h1>Here are your top 10 tracks -</h1>
+          <div id="tracks"></div>
+        </div>
+        <div id="top-artists-main">
+          <h1>Here are your top 10 artists -</h1>
+          <div id="top-artists"></div>
+        </div>
+      </div>
+      <div class="btns">
+        <button id="btn-top-50">Create playlist with top 50 songs</button>
+        <button id="btn-mix-up">
+          Create playlist with mixed up songs from all your playlists
+        </button>
+      </div>
+    </div>
     <script src="ok.js"></script>
     <script src="bundle.js"></script>
   </body>

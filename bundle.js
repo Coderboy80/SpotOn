@@ -5,9 +5,9 @@ let accessToken = new URLSearchParams(window.location.hash.substring(1)).get(
 
 let logOutTimer = setInterval(function () {
   window.location.href = "http://127.0.0.1:5500/index.html";
-}, 1000 * 10);
+}, 1000 * 3500);
 
-const topTracks = document.querySelector("#top-tracks");
+const topTracks = document.querySelector("#tracks");
 const topArtists = document.querySelector("#top-artists");
 const btnTop50 = document.querySelector("#btn-top-50");
 const btnMixUp = document.querySelector("#btn-mix-up");
@@ -25,14 +25,14 @@ spotifyApi.getMe().then(
     let userProfilePic = data?.images[0]?.url;
 
     let username = document.createElement("h1");
-    username.textContent = `Hello, ${userDisplayName}`;
+    username.textContent = `Hello ${userDisplayName}`;
     welcomeMessage.insertAdjacentElement("afterbegin", username);
 
     if (userProfilePic) {
       let pfp = document.createElement("img");
       pfp.src = userProfilePic;
-      pfp.style.height = "200px";
-      pfp.style.width = "200px";
+      pfp.id = "pfp";
+      console.log(pfp);
       welcomeMessage.insertAdjacentElement("beforeend", pfp);
     }
 
@@ -49,25 +49,32 @@ spotifyApi.getMe().then(
   }
 );
 
+function stringToHTML(str) {
+  let parser = new DOMParser();
+  let doc = parser.parseFromString(str, "text/html");
+  return doc.body;
+}
+
 const options = { limit: 10 };
 spotifyApi.getMyTopTracks(options).then(
   function (data) {
     let tracks = ("User information", data.items);
-    tracks.forEach((track) => {
-      let previewUrl = track.preview_url;
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.src = previewUrl;
-      const trackName = document.createElement("h3");
+    tracks.forEach((track, i) => {
+      let trackArtists = "";
       if (track.artists.length === 1)
-        trackName.textContent = `${track.name} by ${track.artists[0].name}`;
+        trackArtists = `${track.name} by ${track.artists[0].name}`;
       else {
-        trackName.textContent = `${track.name} by ${track.artists
+        trackArtists = `${track.name} by ${track.artists
           .map((ele) => ele.name)
           .join(", ")}`;
       }
-      topTracks.insertAdjacentElement("beforeend", trackName);
-      topTracks.insertAdjacentElement("beforeend", audio);
+      let aTrack = `<div class="aTrack">
+    <h3 id="trackName">${i + 1}. ${trackArtists}</h3>
+    <img src="${track.album.images[0].url}" id="trackImg">
+    <audio src="${track.preview_url}" controls="true"></audio>
+</div>`;
+
+      topTracks.insertAdjacentElement("beforeend", stringToHTML(aTrack));
     });
   },
   function (err) {
@@ -78,14 +85,15 @@ spotifyApi.getMyTopTracks(options).then(
 spotifyApi.getMyTopArtists(options).then(
   function (data) {
     const artists = data.items;
-    artists.forEach((artist) => {
-      const artistPfpSource = artist.images[2].url;
-      const artistPfp = document.createElement("img");
-      artistPfp.src = artistPfpSource;
-      const artistName = document.createElement("h3");
-      artistName.textContent = artist.name;
-      topArtists.insertAdjacentElement("beforeend", artistName);
-      topArtists.insertAdjacentElement("beforeend", artistPfp);
+    artists.forEach((artist, i) => {
+      console.log(artist);
+      let anArtist = `<div class="anArtist">
+  <img src="${artist.images[2].url}" />
+  <h3>${i + 1}. ${artist.name}</h3>
+  <h3>${artist.genres[0]}</h3>
+</div>
+`;
+      topArtists.insertAdjacentElement("beforeend", stringToHTML(anArtist));
     });
   },
   function (err) {
@@ -116,6 +124,7 @@ function createMixUpPlaylist() {
 
 async function addMixUpTracks(plId) {
   const mixTracks = [];
+  btnMixUp.disabled = true;
 
   try {
     const data = await spotifyApi.getUserPlaylists(userId, { limit: 50 });
@@ -130,8 +139,10 @@ async function addMixUpTracks(plId) {
       }
     }
     await spotifyApi.addTracksToPlaylist(plId, mixTracks);
+    btnMixUp.disabled = false;
   } catch (error) {
     console.error(`Error adding new tracks: ${error}`);
+    btnMixUp.disabled = false;
   }
 }
 
@@ -161,6 +172,7 @@ function addTop50Tracks(plId) {
     function (data) {
       let tracks = ("User information", data.items);
       const top50Tracks = tracks.map((element) => {
+        console.log(element.id);
         return element.uri;
       });
       spotifyApi.addTracksToPlaylist(plId, top50Tracks);

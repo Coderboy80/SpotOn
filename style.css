@@ -1,4 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
 * {
   margin: 0;
   padding: 0;
+  font-family: "Poppins";
+}
+
+body {
+  background-color: #121212;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 1rem;
+}
+
+#pfp {
+  height: 50px;
+  width: 50px;
+  border-radius: 100px;
+}
+
+#top {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#welcome-message {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+#top-tracks-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  width: 90%;
+  gap: 1rem;
+}
+
+#top-artists {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-self: center;
+  width: 90%;
+}
+
+#tracks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+}
+
+.aTrack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+#tracks img {
+  height: 150px;
+  width: 150px;
+}
+
+h1 {
+  color: #1ed760;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+audio {
+  filter: invert(85%);
+}
+
+button {
+  border: none;
+
+  font-size: 1.2rem;
+  width: 30%;
+  border-radius: 40px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+button:hover {
+  background-color: #1ed760;
 }
